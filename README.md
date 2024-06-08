@@ -2,13 +2,13 @@
   <img src="https://github.com/Dinoel27/StructuralColorGallery/assets/28908217/288d1230-f06d-404d-a3fb-71734e71d278" />
 </p>
 
-**Link to the project**
-
-https://structuralcolorgallerynighttrees-jelena-petrovics-projects.vercel.app/
-
 # StructuralColorGallery
 
 3D Immersive website for viewing Megumi Nagai Night Trees Digitally 
+
+**Link to the project**
+
+https://structuralcolorgallerynighttrees-jelena-petrovics-projects.vercel.app/
 
 **Gallery's Official Website**
 https://www.structuralcolorgallery.com/
