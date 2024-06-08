@@ -6,9 +6,7 @@
 
 3D Immersive website for viewing Megumi Nagai Night Trees Digitally 
 
-**Link to the project**
-
-https://structuralcolorgallerynighttrees-jelena-petrovics-projects.vercel.app/
+**Link to the project** https://structuralcolorgallerynighttrees-jelena-petrovics-projects.vercel.app/
 
 **Gallery's Official Website**
 https://www.structuralcolorgallery.com/
