@@ -14,7 +14,6 @@ https://www.structuralcolorgallery.com/
 **Appreciations**
 Special Thanks to Aysu Unal for handling 3D scanning of the space. Aysu worked with 3D assets optimization in Blender to ensure lightweight meshes and texture compression contributed to faster loading time of the website.  
 
-_Loading Screen_
 <p align="center">
   <img src="https://github.com/Dinoel27/StructuralColorGallery/assets/28908217/694f7818-4268-45b5-887f-b3b047c2fbe0" />
 </p>
