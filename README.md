@@ -19,7 +19,7 @@ _Loading Screen_
   <img src="https://github.com/Dinoel27/StructuralColorGallery/assets/28908217/694f7818-4268-45b5-887f-b3b047c2fbe0" />
 </p>
 
-**Controlls**
+**Controls**
 - use WASD for movement of camera around the 3D world
 - Q and E to rotate the camera around
 - R to reset the camera to the initial position
