@@ -127,7 +127,7 @@ window.addEventListener('resize', () => {
 
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth/2, window.innerHeight/2 );
+    // renderer.setSize(window.innerWidth/2, window.innerHeight/2 );
 });
 
 // Camera
@@ -419,26 +419,20 @@ scene.background = skybox;
 // Create a loading button with an image
 const loadingButton = document.createElement('img');
 loadingButton.src = './static/images/loading.png'; // Path to your loading image
-loadingButton.style.display = 'flex';
 loadingButton.style.width = '100px';
 loadingButton.style.height = '100px';
 loadingButton.style.borderRadius = '50%'; // to make it a circle
 loadingButton.style.transition = 'background-color 0.5s'; // Smooth transition for hover effect
-loadingButton.style.position = 'absolute';
-loadingButton.style.top = '65.5%';
-loadingButton.style.left = '47.5%';
-// loadingButton.style.transform = 'translate(-25%, -50%)';
 loadingButton.style.zIndex = '100';
-document.body.appendChild(loadingButton);
-
-loadingButton.style.marginTop = '3%';
-loadingButton.style.transform = 'scale(1.35)'; // Adjust this value as needed
+const loadingButtonDiv = document.createElement('div');
+loadingButtonDiv.appendChild(loadingButton);
+document.body.appendChild(loadingButtonDiv);
 
 loadingButton.addEventListener('click', () => {
     document.getElementById('loadingOverlay').style.display = 'none';
 });
 
-document.getElementById('loadingOverlay').appendChild(loadingButton);
+document.getElementById('loadingOverlay').appendChild(loadingButtonDiv);
 
 
 
