@@ -11,6 +11,27 @@ const scene = new THREE.Scene();
 // scene.background = new THREE.Color('#000000');
 scene.background = new THREE.Color('#FFFFFF');
 
+// Create a loading button with an image
+const loadingButton = document.createElement('img');
+loadingButton.src = './static/images/loading.png'; // Path to your loading image
+loadingButton.style.width = '100px';
+loadingButton.style.height = '100px';
+loadingButton.style.borderRadius = '50%'; // to make it a circle
+loadingButton.style.transition = 'background-color 0.5s'; // Smooth transition for hover effect
+loadingButton.style.zIndex = '100';
+loadingButton.style.cursor = 'pointer';
+const loadingButtonDiv = document.createElement('div');
+loadingButtonDiv.appendChild(loadingButton);
+document.body.appendChild(loadingButtonDiv);
+
+loadingButton.addEventListener('click', () => {
+    document.getElementById('loadingOverlay').style.display = 'none';
+    canvas.style.display = 'block';
+    window.addEventListener('mousemove', onObjectHover);
+});
+
+document.getElementById('loadingOverlay').appendChild(loadingButtonDiv);
+
 // Loading manager
 const loadingManager = new THREE.LoadingManager();
 
@@ -20,6 +41,7 @@ loadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
 
 loadingManager.onLoad = function () {
     console.log('Loading complete!');
+    loadingButton.style.border = '5px solid green';
 };
 
 loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
@@ -127,7 +149,7 @@ window.addEventListener('resize', () => {
 
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    // renderer.setSize(window.innerWidth/2, window.innerHeight/2 );
+    renderer.setSize(window.innerWidth/2, window.innerHeight/2 );
 });
 
 // Camera
@@ -343,9 +365,6 @@ const onObjectHover = (event) => {
     }
 };
 
-window.addEventListener('mousemove', onObjectHover);
-
-
 // Function to exit the camera look at and restore the original state
 const exitCameraLookAt = () => {
     if (selectedObject) {
@@ -415,25 +434,5 @@ const skyboxTextures = [
 ];
 const skybox = skyboxLoader.load(skyboxTextures);
 scene.background = skybox;
-
-// Create a loading button with an image
-const loadingButton = document.createElement('img');
-loadingButton.src = './static/images/loading.png'; // Path to your loading image
-loadingButton.style.width = '100px';
-loadingButton.style.height = '100px';
-loadingButton.style.borderRadius = '50%'; // to make it a circle
-loadingButton.style.transition = 'background-color 0.5s'; // Smooth transition for hover effect
-loadingButton.style.zIndex = '100';
-const loadingButtonDiv = document.createElement('div');
-loadingButtonDiv.appendChild(loadingButton);
-document.body.appendChild(loadingButtonDiv);
-
-loadingButton.addEventListener('click', () => {
-    document.getElementById('loadingOverlay').style.display = 'none';
-});
-
-document.getElementById('loadingOverlay').appendChild(loadingButtonDiv);
-
-
 
 
