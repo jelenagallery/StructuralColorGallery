@@ -149,7 +149,7 @@ window.addEventListener('resize', () => {
 
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth/2, window.innerHeight/2 );
+    // renderer.setSize(window.innerWidth/2, window.innerHeight/2 );
 });
 
 // Camera
