@@ -204,11 +204,12 @@ body {
 }
 
 /* LOADING ARROW */
-.down-arrow {
-    border: solid black;
+#down-arrow {
+    margin-bottom: 20px;
+    border: solid #E05641;
     border-width: 0 3px 3px 0;
     display: inline-block;
-    padding: 3px;
+    padding: 10px;
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
 }
@@ -222,57 +223,3 @@ body {
     margin-left: 10px;
     margin-right: 10px;
 }
-
-/* Media Query for 1920x1080 resolution */
-/*@media (max-width: 1920px) and (max-height: 1080px) {*/
-/*  .loading-text {*/
-/*      font-size: 2em;*/
-/*      transform: translate(0, -20vh);*/
-/*  }*/
-
-/*  .loading-percentage {*/
-/*      font-size: 1.5em;*/
-/*      transform: translate(0, -20vh);*/
-/*  }*/
-
-/*  .artist-info, .enter {*/
-/*      font-size: 1.5em;*/
-/*      max-width: 70%;*/
-/*  }*/
-
-/*  .nagai {*/
-/*      font-size: 60px;*/
-/*      transform: translate(-30px, -380%);*/
-/*  }*/
-
-/*  .info {*/
-/*      max-width: 35vw;*/
-/*      transform: translate(-20px, -190%);*/
-/*  }*/
-
-/*  .p1 {*/
-/*      font-size: 1.5em;*/
-/*  }*/
-
-/*  .custom-textarea {*/
-/*      width: 300px;*/
-/*      height: 70px;*/
-/*      font-size: 18px;*/
-/*      padding: 15px;*/
-/*  }*/
-
-/*  .button-80 {*/
-/*      font-size: 1.75rem;*/
-/*      padding: 1rem 1.25rem;*/
-/*  }*/
-
-/*  .down-arrow {*/
-/*      top: 100px;*/
-/*  }*/
-
-/*  .dot {*/
-/*      height: 30px;*/
-/*      width: 30px;*/
-/*      transform: translate(30px, 20px);*/
-/*  }*/
-/*}*/

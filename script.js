@@ -42,6 +42,8 @@ loadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
 loadingManager.onLoad = function () {
     console.log('Loading complete!');
     loadingButton.style.border = '5px solid green';
+    document.getElementById('down-arrow').style.borderColor = `green`;
+    document.getElementById('loadingPercentage').style.color = `green`;
 };
 
 loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
