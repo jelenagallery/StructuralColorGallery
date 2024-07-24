@@ -1,14 +1,11 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import * as TWEEN from '@tweenjs/tween.js';
 
 // Base
 const canvas = document.querySelector('canvas.webgl');
 const scene = new THREE.Scene();
-// scene.background = new THREE.Color('#000000');
 scene.background = new THREE.Color('#FFFFFF');
 
 // Create a loading button with an image
@@ -28,6 +25,7 @@ loadingButton.addEventListener('click', () => {
     document.getElementById('loadingOverlay').style.display = 'none';
     canvas.style.display = 'block';
     window.addEventListener('mousemove', onObjectHover);
+    document.addEventListener('mousemove', onMouseMove);
 });
 
 document.getElementById('loadingOverlay').appendChild(loadingButtonDiv);
@@ -61,7 +59,6 @@ const dracoLoader = new DRACOLoader();
 
 dracoLoader.setDecoderPath('./static/draco/');
 gltfloader.setDRACOLoader(dracoLoader);
-
 
 let selectedObject = null;
 let originalObjectPosition = new THREE.Vector3();
@@ -100,7 +97,7 @@ const models = [
     { path: './static/models/deep_sea_fish_b.glb', position: [-0.66, 1.05, 3.88], rotation: [0, 3.15, 0], name: 'Deep-Sea Fish B', description: 'Oil, gold, and silver on wood (paulownia) 9 1/2 x 14 3/4 in. Abstract painting of a fish.' },
     { path: './static/models/profile.glb', position: [-1.98, 1.1, 3.9], rotation: [0, 3.15, 0], name: 'Profile', description: 'Oil, gold, and silver on wood (Japanese cypress. 18 x 9 in.' },
     { path: './static/models/owl.glb', position: [-1.35, 1, 2.75], rotation: [0, 2.2, 0], name: 'Owl', description: 'Oil, gold, and silver on wood (Curly maple). 15 x 8 7/8 in.' },
-]; 
+];
 
 // Enable shadows for objects
 models.forEach(({ path, position, rotation, name, description }) => {
@@ -128,13 +125,11 @@ models.forEach(({ path, position, rotation, name, description }) => {
     );
 });
 
-
 function addAmbientLight(intensity, color) {
     const ambientLight = new THREE.AmbientLight(color, intensity);
     scene.add(ambientLight);
 }
-addAmbientLight(1.5, 0xffffff); 
-
+addAmbientLight(1.5, 0xffffff);
 
 // Sizes
 const sizes = {
@@ -151,46 +146,24 @@ window.addEventListener('resize', () => {
 
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    // renderer.setSize(window.innerWidth/2, window.innerHeight/2 );
 });
 
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
 camera.position.set(4.6, 1.5, 1.6);
-// camera.lookAt(0, 0, 0);
-camera.rotation.set(0, 1.5, 0)
+camera.rotation.set(0, 1.5, 0);
 
 scene.add(camera);
-
-// Variables to store key states
-const keyState = {};
-
-
-// Variables for smooth turning
-let targetRotationY = camera.rotation.y;
-const turnSpeed = THREE.MathUtils.degToRad(0.1); // Speed of turning in radians
-const moveSpeed = 0.005; // Speed of movement
-
-
-/**
- * NEW CONTROLS IMPLEMENTATION 
- * CONTINUOUS MOVEMENT FROM VR 
- */
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     alpha: true,
-    antialias: true, 
+    antialias: true,
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-
-// Controls
-const controls = new PointerLockControls(camera, document.body);
-scene.add(controls.getObject());
-controls.enableDamping = true;
 
 // Movement variables
 const movement = {
@@ -198,8 +171,6 @@ const movement = {
     backward: false,
     left: false,
     right: false,
-    rotateLeft: false,
-    rotateRight: false,
 };
 
 // Bounding box
@@ -208,27 +179,26 @@ const boundingBox = new THREE.Box3(
     new THREE.Vector3(5, 5, 4.05)
 );
 
+let rotateEnabled = false;
 
 // Event listeners for keydown and keyup
 document.addEventListener('keydown', (event) => {
     switch (event.code) {
         case 'KeyW':
             movement.forward = true;
+            rotateEnabled = true;
             break;
         case 'KeyS':
             movement.backward = true;
+            rotateEnabled = true;
             break;
         case 'KeyA':
             movement.left = true;
+            rotateEnabled = true;
             break;
         case 'KeyD':
             movement.right = true;
-            break;
-        case 'KeyQ':
-            movement.rotateLeft = true;
-            break;
-        case 'KeyE':
-            movement.rotateRight = true;
+            rotateEnabled = true;
             break;
         case 'KeyR':
             recenterCamera();
@@ -240,21 +210,19 @@ document.addEventListener('keyup', (event) => {
     switch (event.code) {
         case 'KeyW':
             movement.forward = false;
+            rotateEnabled = movement.backward || movement.left || movement.right;
             break;
         case 'KeyS':
             movement.backward = false;
+            rotateEnabled = movement.forward || movement.left || movement.right;
             break;
         case 'KeyA':
             movement.left = false;
+            rotateEnabled = movement.forward || movement.backward || movement.right;
             break;
         case 'KeyD':
             movement.right = false;
-            break;
-        case 'KeyQ':
-            movement.rotateLeft = false;
-            break;
-        case 'KeyE':
-            movement.rotateRight = false;
+            rotateEnabled = movement.forward || movement.backward || movement.left;
             break;
     }
 });
@@ -283,7 +251,6 @@ const showUIPanel = (name, description) => {
     uiElement.style.fontSize = '18px';
     uiElement.style.letterSpacing = '0.5px';
 
-
     uiElement.innerHTML = `
         <div><strong>${name}</strong></div>
         <div>${description}</div>
@@ -297,8 +264,7 @@ const showUIPanel = (name, description) => {
     exitButton.style.color = '#ffffff'; // Set the text color to white for better contrast
     exitButton.style.border = '0px solid #A95E2A'; // Set the border width and color
     exitButton.style.borderRadius = '2px'; // Optional: add rounded corners
-    exitButton.style.transform = 'scale(1)'; 
-    // exitButton.style.margin = '5px'; 
+    exitButton.style.transform = 'scale(1)';
     exitButton.style.marginTop = '10px';
     exitButton.style.marginLeft = '2px';
 
@@ -330,7 +296,6 @@ const updateUIElementPosition = (object) => {
         }
     }
 };
-
 
 // Update to show UI panel with information about the object on hover
 const onObjectHover = (event) => {
@@ -378,29 +343,67 @@ const exitCameraLookAt = () => {
 
 // Function to recenter the camera
 function recenterCamera() {
-    const position = controls.getObject().position;
-    position.set(4.6, 1.5, 1.6);
-    controls.getObject().rotation.set(0, 1.5, 0);
+    camera.position.set(4.6, 1.5, 1.6);
+    camera.rotation.set(0, 1.5, 0);
 }
 
+let targetLookAt = new THREE.Vector3();
+const lookAtSmoothFactor = 0.02; // Lower value for smoother movement
+
+// Speed factor for camera movement
+const moveSpeed = 0.01; // You can adjust this value for different speeds
+
+// Function to handle mouse movement and update the target lookAt position
+const onMouseMove = (event) => {
+    if (rotateEnabled) {
+        const mouseX = (event.clientX / window.innerWidth - 0.5) * 0.2; // Reduce sensitivity
+        const mouseY = 0; // Lock vertical rotation by setting mouseY to 0
+
+        const vector = new THREE.Vector3(mouseX, mouseY, 0.5).unproject(camera);
+        const dir = vector.sub(camera.position).normalize();
+        const distance = -camera.position.z / dir.z;
+        targetLookAt = camera.position.clone().add(dir.multiplyScalar(distance));
+    }
+};
 
 // Animation loop
 const tick = () => {
-// Update camera position based on movement
-if (movement.forward) controls.moveForward(0.1);
-if (movement.backward) controls.moveForward(-0.1);
-if (movement.left) controls.moveRight(-0.1);
-if (movement.right) controls.moveRight(0.1);
+    // Update camera lookAt position smoothly
+    camera.lookAt(
+        THREE.MathUtils.lerp(camera.position.x, targetLookAt.x, lookAtSmoothFactor),
+        camera.position.y, // Lock vertical rotation
+        THREE.MathUtils.lerp(camera.position.z, targetLookAt.z, lookAtSmoothFactor)
+    );
 
-// Update camera rotation based on rotation keys
-if (movement.rotateLeft) controls.getObject().rotation.y += 0.01;
-if (movement.rotateRight) controls.getObject().rotation.y -= 0.01;
+    // Update camera position based on movement
+    if (movement.forward) {
+        const direction = new THREE.Vector3();
+        camera.getWorldDirection(direction);
+        camera.position.add(direction.multiplyScalar(moveSpeed)); // Move forward
+    }
+    if (movement.backward) {
+        const direction = new THREE.Vector3();
+        camera.getWorldDirection(direction);
+        camera.position.add(direction.multiplyScalar(-moveSpeed)); // Move backward
+    }
+    if (movement.left) {
+        const direction = new THREE.Vector3();
+        camera.getWorldDirection(direction);
+        direction.cross(camera.up); // Get the perpendicular direction
+        camera.position.add(direction.multiplyScalar(-moveSpeed)); // Move left
+    }
+    if (movement.right) {
+        const direction = new THREE.Vector3();
+        camera.getWorldDirection(direction);
+        direction.cross(camera.up); // Get the perpendicular direction
+        camera.position.add(direction.multiplyScalar(moveSpeed)); // Move right
+    }
 
-// Clamp camera position within bounding box
-const position = controls.getObject().position;
-position.x = Math.min(Math.max(position.x, boundingBox.min.x), boundingBox.max.x);
-position.y = Math.min(Math.max(position.y, boundingBox.min.y), boundingBox.max.y);
-position.z = Math.min(Math.max(position.z, boundingBox.min.z), boundingBox.max.z);
+    // Clamp camera position within bounding box
+    const position = camera.position;
+    position.x = Math.min(Math.max(position.x, boundingBox.min.x), boundingBox.max.x);
+    position.y = Math.min(Math.max(position.y, boundingBox.min.y), boundingBox.max.y);
+    position.z = Math.min(Math.max(position.z, boundingBox.min.z), boundingBox.max.z);
 
     TWEEN.update();
     renderer.render(scene, camera);
@@ -409,20 +412,8 @@ position.z = Math.min(Math.max(position.z, boundingBox.min.z), boundingBox.max.z
 
 tick();
 
-// Animation loop
-const animate = () => {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-};
-
-animate();
-
-// Handle mouse movements
-window.addEventListener('mousemove', (event) => {
-    mouse.x = (event.clientX / sizes.width) * 2 - 1;
-    mouse.y = - (event.clientY / sizes.height) * 2 + 1;
-});
-
+// Handle mouse movements for UI hover
+window.addEventListener('mousemove', onObjectHover);
 
 // Add skybox
 const skyboxLoader = new THREE.CubeTextureLoader();
@@ -436,5 +427,3 @@ const skyboxTextures = [
 ];
 const skybox = skyboxLoader.load(skyboxTextures);
 scene.background = skybox;
-
-
