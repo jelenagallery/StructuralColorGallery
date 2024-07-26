@@ -1,8 +1,8 @@
-import {canvas, stats} from "./engine.js";
+import {canvas, /*stats*/} from "./engine.js";
 
 export const uiContainer = document.getElementById('ui-container');
-export const body = document.getElementsByTagName('body').item(0);
-body.appendChild(stats.dom);
+// export const body = document.getElementsByTagName('body').item(0);
+// body.appendChild(stats.dom);
 
 const splashInstructions = document.getElementById('splash-instructions');
 

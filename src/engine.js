@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import * as TWEEN from '@tweenjs/tween.js';
 import {sizes, skyboxTextures} from "./config.js";
-import Stats from "three/addons/libs/stats.module.js";
+// import Stats from "three/addons/libs/stats.module.js";
 import {init as initControls} from "./controls.js";
 
 // Base
@@ -16,7 +16,7 @@ export const renderer = new THREE.WebGLRenderer({
 });
 export const {animateControls, enableKeyboard} = initControls(camera, renderer, scene);
 const ambientLight = new THREE.AmbientLight(0xffffff, 4);
-export const stats = new Stats();
+// export const stats = new Stats();
 let initialized = false;
 
 scene.background = new THREE.Color('#FFFFFF');
@@ -55,7 +55,7 @@ const tick = () => {
   animateControls();
   TWEEN.update();
   renderer.render(scene, camera);
-  stats.update();
+  // stats.update();
 
   if (!initialized) {
     initialized = true;
