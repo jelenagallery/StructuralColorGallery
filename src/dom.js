@@ -4,6 +4,8 @@ export const uiContainer = document.getElementById('ui-container');
 export const body = document.getElementsByTagName('body').item(0);
 body.appendChild(stats.dom);
 
+const splashInstructions = document.getElementById('splash-instructions');
+
 // Create a loading button with an image
 export const loadingButton = document.createElement('img');
 loadingButton.src = './static/images/loading.png'; // Path to your loading image
@@ -19,7 +21,17 @@ document.body.appendChild(loadingButtonDiv);
 
 loadingButton.addEventListener('click', () => {
   document.getElementById('loadingOverlay').style.display = 'none';
+  splashInstructions.style.display = 'block';
   canvas.style.display = 'block';
+
+  document.addEventListener( 'keydown', hideSplashInstructions, {once: true} );
+  document.addEventListener( 'keyup', hideSplashInstructions, {once: true} );
 });
+
+splashInstructions.addEventListener('click', hideSplashInstructions);
+
+function hideSplashInstructions() {
+  splashInstructions.style.display = 'none';
+}
 
 document.getElementById('loadingOverlay').appendChild(loadingButtonDiv);

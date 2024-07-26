@@ -38,6 +38,117 @@
         <!-- <p class="enter">Enter the forest</p>   -->
         <!-- <button id="enterForestButton" class="enter-forest-button" class="button-80">Enter the Forest</button> -->
     </div>
+    <div class="splash-instructions" id="splash-instructions">
+        <div class="svg-drag-animation">
+            <div style="color: white;font-family: sans-serif;margin-bottom: 2rem;">Click and drag your mouse to look around</div>
+            <svg class="drag-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Mouse body -->
+                <rect x="35" y="20" width="30" height="50" rx="15" fill="#e0e0e0" />
+
+                <!-- Mouse button line -->
+                <line x1="50" y1="20" x2="50" y2="40" stroke="#666" stroke-width="3" />
+
+                <!-- Scroll wheel -->
+                <circle cx="50" cy="35" r="3" fill="#333" />
+
+                <!-- Four-ended arrow (crosshair) -->
+                <g stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Up arrow -->
+                    <line x1="50" y1="5" x2="50" y2="15" />
+                    <line x1="45" y1="10" x2="50" y2="5" />
+                    <line x1="55" y1="10" x2="50" y2="5" />
+
+                    <!-- Right arrow -->
+                    <line x1="85" y1="50" x2="95" y2="50" />
+                    <line x1="90" y1="45" x2="95" y2="50" />
+                    <line x1="90" y1="55" x2="95" y2="50" />
+
+                    <!-- Down arrow -->
+                    <line x1="50" y1="85" x2="50" y2="95" />
+                    <line x1="45" y1="90" x2="50" y2="95" />
+                    <line x1="55" y1="90" x2="50" y2="95" />
+
+                    <!-- Left arrow -->
+                    <line x1="5" y1="50" x2="15" y2="50" />
+                    <line x1="10" y1="45" x2="5" y2="50" />
+                    <line x1="10" y1="55" x2="5" y2="50" />
+                </g>
+            </svg>
+        </div>
+        <div class="svg-keyboard-animation">
+            <div style="color: white;font-family: sans-serif;margin-bottom: 2rem;">Use your keyboard with WASD or ARROW keys to walk around</div>
+            <div style="display: inline-block;">
+                <svg class="keyboard-icon" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+                    <!-- W key -->
+                    <g class="w-key">
+                        <rect class="key" x="70" y="20" width="40" height="40" rx="5" />
+                        <text class="key-text" x="90" y="40">W</text>
+                    </g>
+
+                    <!-- A key -->
+                    <g class="a-key">
+                        <rect class="key" x="20" y="70" width="40" height="40" rx="5" />
+                        <text class="key-text" x="40" y="90">A</text>
+                    </g>
+
+                    <!-- S key -->
+                    <g class="s-key">
+                        <rect class="key" x="70" y="70" width="40" height="40" rx="5" />
+                        <text class="key-text" x="90" y="90">S</text>
+                    </g>
+
+                    <!-- D key -->
+                    <g class="d-key">
+                        <rect class="key" x="120" y="70" width="40" height="40" rx="5" />
+                        <text class="key-text" x="140" y="90">D</text>
+                    </g>
+
+                    <!-- Arrow indicators -->
+                    <g fill="#333" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M90 5 L95 10 L85 10 Z" /> <!-- Up arrow -->
+                        <path d="M5 90 L10 95 L10 85 Z" /> <!-- Left arrow -->
+                        <path d="M90 135 L95 130 L85 130 Z" /> <!-- Down arrow -->
+                        <path d="M175 90 L170 95 L170 85 Z" /> <!-- Right arrow -->
+                    </g>
+                </svg>
+            </div>
+            <div style="display: inline-block;">
+                <svg class="keyboard-icon" viewBox="0 0 200 140" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Up key -->
+                    <g class="up-key">
+                        <rect class="key" x="70" y="20" width="40" height="40" rx="5" />
+                        <path class="key-arrow" d="M90 30 L100 40 L80 40 Z" />
+                    </g>
+
+                    <!-- Left key -->
+                    <g class="left-key">
+                        <rect class="key" x="20" y="70" width="40" height="40" rx="5" />
+                        <path class="key-arrow" d="M30 90 L40 80 L40 100 Z" />
+                    </g>
+
+                    <!-- Down key -->
+                    <g class="down-key">
+                        <rect class="key" x="70" y="70" width="40" height="40" rx="5" />
+                        <path class="key-arrow" d="M90 100 L100 90 L80 90 Z" />
+                    </g>
+
+                    <!-- Right key -->
+                    <g class="right-key">
+                        <rect class="key" x="120" y="70" width="40" height="40" rx="5" />
+                        <path class="key-arrow" d="M150 90 L140 80 L140 100 Z" />
+                    </g>
+
+                    <!-- Directional indicators -->
+                    <g fill="#333">
+                        <path d="M90 5 L95 12 L85 12 Z" /> <!-- Up indicator -->
+                        <path d="M5 90 L12 95 L12 85 Z" /> <!-- Left indicator -->
+                        <path d="M90 135 L95 128 L85 128 Z" /> <!-- Down indicator -->
+                        <path d="M195 90 L188 95 L188 85 Z" /> <!-- Right indicator -->
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
     <canvas class="webgl"></canvas>
     <div id="ui-container"></div>
     <script type="module" src="src/index.js"></script>

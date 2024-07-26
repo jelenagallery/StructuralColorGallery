@@ -223,3 +223,79 @@ body {
     margin-left: 10px;
     margin-right: 10px;
 }
+
+/* instructions */
+.splash-instructions {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 95%;
+    z-index: 9999;
+    text-align: center;
+    margin: auto;
+    padding-top: 10%;
+    height: 100vh;
+    background: rgba(0,0,0,0.85);
+    cursor: pointer;
+}
+
+.splash-instructions .svg-drag-animation, .splash-instructions .svg-keyboard-animation {
+    width: 50%;
+    display: inline-block;
+}
+
+.splash-instructions .svg-drag-animation {
+    float: left;
+}
+
+.splash-instructions .svg-keyboard-animation {
+    float: right;
+}
+
+/* instructions - mouse animation */
+@keyframes pulseAnimation {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.drag-icon {
+    width: 100px;
+    height: 100px;
+    animation: pulseAnimation 2s ease-in-out infinite;
+}
+
+.drag-icon:hover {
+    cursor: grab;
+}
+
+/* instructions - keyboard animation */
+@keyframes keyPressAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.keyboard-icon {
+    width: 200px;
+    height: 140px;
+}
+
+.key {
+    fill: #e0e0e0;
+    stroke: #333;
+    stroke-width: 2;
+}
+
+.key-text {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    fill: #333;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+.w-key { animation: keyPressAnimation 1.5s infinite; }
+.a-key { animation: keyPressAnimation 1.5s infinite 0.2s; }
+.s-key { animation: keyPressAnimation 1.5s infinite 0.4s; }
+.d-key { animation: keyPressAnimation 1.5s infinite 0.6s; }
