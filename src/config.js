@@ -11,3 +11,7 @@ export const skyboxTextures = [
   './static/textures/skybox/front.jpg',
   './static/textures/skybox/back.jpg'
 ];
+
+export function isSafari() {
+  return navigator.vendor ==  "Apple Computer, Inc.";
+}

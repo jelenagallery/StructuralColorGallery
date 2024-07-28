@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import * as TWEEN from '@tweenjs/tween.js';
-import {sizes, skyboxTextures} from "./config.js";
+import {isSafari, sizes, skyboxTextures} from "./config.js";
 // import Stats from "three/addons/libs/stats.module.js";
-import {init as initControls} from "./controls.js";
+import {init as initControls, controls} from "./controls.js";
 
 // Base
 export const canvas = document.querySelector('canvas.webgl');
@@ -14,7 +14,35 @@ export const renderer = new THREE.WebGLRenderer({
   antialias: true,
   preserveDrawingBuffer: true,
 });
-export const {animateControls, enableKeyboard} = initControls(camera, renderer, scene);
+
+const onLock = () => onResize(true);
+const onUnlock = () => onResize(false);
+
+renderer.domElement.ownerDocument.addEventListener( 'pointerlockchange', () => onResize('pointerlockchange') );
+
+const onResize = (isLocked = null) => {
+  const isSafariBrowser = isSafari();
+  if (isSafariBrowser) {
+    if (isLocked === true) {
+      canvas.style.top = '-30px';
+      // canvas.style.marginTop = '-30px';
+    } else if (isLocked === false) {
+      canvas.style.top = '0px';
+      // canvas.style.marginTop = '0px';
+    }
+  } else {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+  }
+};
+
+export const {animateControls, enableKeyboard} = initControls(camera, renderer, scene, onLock, onUnlock);
 const ambientLight = new THREE.AmbientLight(0xffffff, 4);
 // export const stats = new Stats();
 let initialized = false;
@@ -39,17 +67,6 @@ const skyboxLoader = new THREE.CubeTextureLoader();
 const skybox = skyboxLoader.load(skyboxTextures);
 scene.background = skybox;
 
-window.addEventListener('resize', () => {
-  sizes.width = window.innerWidth;
-  sizes.height = window.innerHeight;
-
-  camera.aspect = sizes.width / sizes.height;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(sizes.width, sizes.height);
-  renderer.setPixelRatio(window.devicePixelRatio);
-});
-
 // // Animation loop
 const tick = () => {
   animateControls();
@@ -63,7 +80,6 @@ const tick = () => {
   }
 };
 
-
+window.addEventListener('resize', onResize);
 tick(); // first tick to load the scene fully once load progress is at 100%
-initControls(camera, renderer, scene);
 renderer.setAnimationLoop(tick);

@@ -3,8 +3,9 @@ import * as THREE from "three";
 import {objects} from "./load.js";
 import {onObjectHover} from "./labels.js";
 
-export function init (camera, renderer, scene) {
-  const controls = new PointerLockControls( camera, renderer.domElement );
+export let controls;
+export function init (camera, renderer, scene, lockCallback = null, unlockCallback = null) {
+  controls = new PointerLockControls( camera, renderer.domElement );
   const raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
   const deltaMul = 1000;
   const wasd1 = 10.0;
@@ -35,9 +36,15 @@ export function init (camera, renderer, scene) {
   const direction = new THREE.Vector3();
 
   const lockMouse = () => {
+    if (lockCallback) {
+      lockCallback(controls);
+    }
     return controls.lock();
   };
   const unlockMouse = function () {
+    if (unlockCallback) {
+      unlockCallback(controls);
+    }
     return controls.unlock();
   };
   renderer.domElement.addEventListener('mousedown', lockMouse);
