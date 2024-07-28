@@ -7,74 +7,39 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="loadingOverlay" class="loading">
-        <div id="artistInfo" class="artist-info">
-            <img id="artistInfo" src="./static/images/logo.png" class="logo" width="90" height="90">
-            <p class="nagai">MEGUMI NAGAI<span class="dot"></span><span class="title1">NIGHT TREES</span></p>
-            <p class="info">To complement the artwork of Megumi Nagai, Structural Color Gallery's space in Brooklyn has been transformed into a nocturnal forest, creating a captivating atmosphere. The use of live trees adds a sense of authenticity and connection to the environment, allowing visitors to feel as though they are truly immersed in a forest. The goal is to not only see the artwork but also to step into the artist's mind and perspective.</p>
-        </div>
-        <div class="loading-text">
-            <span class="loading-text-words">E</span>
-            <span class="loading-text-words">N</span>
-            <span class="loading-text-words">T</span>
-            <span class="loading-text-words">E</span>
-            <span class="loading-text-words">R</span>
-            <span class="loading-text-words"></span>
-            <span class="loading-text-words">T</span>
-            <span class="loading-text-words">H</span>
-            <span class="loading-text-words">E</span>
-            <span class="loading-text-words"></span>
-            <span class="loading-text-words">F</span>
-            <span class="loading-text-words">O</span>
-            <span class="loading-text-words">R</span>
-            <span class="loading-text-words">E</span>
-            <span class="loading-text-words">S</span>
-            <span class="loading-text-words">T</span>
-        </div>
-        <div id="loadingPercentage" class="loading-percentage">0%</div>
-        <div id="down-arrow"></div>
-       
-        <!-- <div id="artistInfo" class="enter">Enter the Forest</div> -->
-        <!-- <p class="enter">Enter the forest</p>   -->
-        <!-- <button id="enterForestButton" class="enter-forest-button" class="button-80">Enter the Forest</button> -->
+<div id="loadingOverlay" class="loading">
+    <div class="artist-info">
+        <img src="./static/images/logo.png" class="logo" width="90" height="90">
+        <p class="nagai">MEGUMI NAGAI<span class="dot"></span><span class="title1">NIGHT TREES</span></p>
+        <p class="info">To complement the artwork of Megumi Nagai, Structural Color Gallery's space in Brooklyn has been transformed into a nocturnal forest, creating a captivating atmosphere. The use of live trees adds a sense of authenticity and connection to the environment, allowing visitors to feel as though they are truly immersed in a forest. The goal is to not only see the artwork but also to step into the artist's mind and perspective.</p>
     </div>
-    <div class="splash-instructions" id="splash-instructions">
-        <div class="svg-drag-animation">
-            <div style="color: white;font-family: sans-serif;margin-bottom: 2rem;">Click and drag your mouse to look around</div>
-            <svg class="drag-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <!-- Mouse body -->
-                <rect x="35" y="20" width="30" height="50" rx="15" fill="#e0e0e0" />
+    <div class="loading-text">
+        <span class="loading-text-words">E</span>
+        <span class="loading-text-words">N</span>
+        <span class="loading-text-words">T</span>
+        <span class="loading-text-words">E</span>
+        <span class="loading-text-words">R</span>
+        <span class="loading-text-words"></span>
+        <span class="loading-text-words">T</span>
+        <span class="loading-text-words">H</span>
+        <span class="loading-text-words">E</span>
+        <span class="loading-text-words"></span>
+        <span class="loading-text-words">F</span>
+        <span class="loading-text-words">O</span>
+        <span class="loading-text-words">R</span>
+        <span class="loading-text-words">E</span>
+        <span class="loading-text-words">S</span>
+        <span class="loading-text-words">T</span>
+    </div>
+    <div id="loadingPercentage" class="loading-percentage">0%</div>
+    <div id="down-arrow"></div>
 
-                <!-- Mouse button line -->
-                <line x1="50" y1="20" x2="50" y2="40" stroke="#666" stroke-width="3" />
-
-                <!-- Scroll wheel -->
-                <circle cx="50" cy="35" r="3" fill="#333" />
-
-                <!-- Four-ended arrow (crosshair) -->
-                <g stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <!-- Up arrow -->
-                    <line x1="50" y1="5" x2="50" y2="15" />
-                    <line x1="45" y1="10" x2="50" y2="5" />
-                    <line x1="55" y1="10" x2="50" y2="5" />
-
-                    <!-- Right arrow -->
-                    <line x1="85" y1="50" x2="95" y2="50" />
-                    <line x1="90" y1="45" x2="95" y2="50" />
-                    <line x1="90" y1="55" x2="95" y2="50" />
-
-                    <!-- Down arrow -->
-                    <line x1="50" y1="85" x2="50" y2="95" />
-                    <line x1="45" y1="90" x2="50" y2="95" />
-                    <line x1="55" y1="90" x2="50" y2="95" />
-
-                    <!-- Left arrow -->
-                    <line x1="5" y1="50" x2="15" y2="50" />
-                    <line x1="10" y1="45" x2="5" y2="50" />
-                    <line x1="10" y1="55" x2="5" y2="50" />
-                </g>
-            </svg>
-        </div>
+    <!-- <div id="artistInfo" class="enter">Enter the Forest</div> -->
+    <!-- <p class="enter">Enter the forest</p>   -->
+    <!-- <button id="enterForestButton" class="enter-forest-button" class="button-80">Enter the Forest</button> -->
+</div>
+<div class="splash-instructions" id="splash-instructions">
+    <div style="max-width: 1100px;margin: auto;">
         <div class="svg-keyboard-animation">
             <div style="color: white;font-family: sans-serif;margin-bottom: 2rem;">Use your keyboard with WASD or ARROW keys to walk around</div>
             <div style="display: inline-block;">
@@ -148,9 +113,46 @@
                 </svg>
             </div>
         </div>
+        <div class="svg-drag-animation">
+            <div style="color: white;font-family: sans-serif;margin-bottom: 2rem;">Click and drag your mouse to look around</div>
+            <svg class="drag-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Mouse body -->
+                <rect x="35" y="20" width="30" height="50" rx="15" fill="#e0e0e0" />
+
+                <!-- Mouse button line -->
+                <line x1="50" y1="20" x2="50" y2="40" stroke="#666" stroke-width="3" />
+
+                <!-- Scroll wheel -->
+                <circle cx="50" cy="35" r="3" fill="#333" />
+
+                <!-- Four-ended arrow (crosshair) -->
+                <g stroke="#333" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Up arrow -->
+                    <line x1="50" y1="5" x2="50" y2="15" />
+                    <line x1="45" y1="10" x2="50" y2="5" />
+                    <line x1="55" y1="10" x2="50" y2="5" />
+
+                    <!-- Right arrow -->
+                    <line x1="85" y1="50" x2="95" y2="50" />
+                    <line x1="90" y1="45" x2="95" y2="50" />
+                    <line x1="90" y1="55" x2="95" y2="50" />
+
+                    <!-- Down arrow -->
+                    <line x1="50" y1="85" x2="50" y2="95" />
+                    <line x1="45" y1="90" x2="50" y2="95" />
+                    <line x1="55" y1="90" x2="50" y2="95" />
+
+                    <!-- Left arrow -->
+                    <line x1="5" y1="50" x2="15" y2="50" />
+                    <line x1="10" y1="45" x2="5" y2="50" />
+                    <line x1="10" y1="55" x2="5" y2="50" />
+                </g>
+            </svg>
+        </div>
     </div>
-    <canvas class="webgl"></canvas>
-    <div id="ui-container"></div>
-    <script type="module" src="src/index.js"></script>
+</div>
+<canvas class="webgl"></canvas>
+<div id="ui-container"></div>
+<script type="module" src="src/index.js"></script>
 </body>
 </html>

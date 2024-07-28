@@ -77,9 +77,6 @@ models.forEach(({ path, position, rotation, name, description }) => {
   );
 });
 
-loadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
-};
-
 loadingManager.onLoad = function () {
   console.debug('Loading complete!');
   loadingButton.style.border = '5px solid green';
@@ -88,7 +85,7 @@ loadingManager.onLoad = function () {
 };
 
 loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
-  const percentage = Math.round((itemsLoaded / itemsTotal) * 100);
+  const percentage = Math.min(100, Math.round((itemsLoaded / itemsTotal) * 100));
   document.getElementById('loadingPercentage').innerText = `${percentage}%`;
 };
 

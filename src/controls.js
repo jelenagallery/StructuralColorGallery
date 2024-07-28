@@ -42,7 +42,6 @@ export function init (camera, renderer, scene) {
   };
   renderer.domElement.addEventListener('mousedown', lockMouse);
   renderer.domElement.addEventListener('mouseup', unlockMouse);
-  renderer.domElement.addEventListener('mousemove', onObjectHover);
 
   const enableKeyboard = () => {
     const onKeyDown = function ( event ) {
@@ -93,56 +92,53 @@ export function init (camera, renderer, scene) {
 
     document.addEventListener( 'keydown', onKeyDown );
     document.addEventListener( 'keyup', onKeyUp );
-  }
+  };
 
   const animateControls = () => {
     const time = performance.now();
-    // const clock = new THREE.Clock();
-    // controls.update && controls.update(clock.getDelta());
 
-    // if ( controls.isLocked === true ) {
-      raycaster.ray.origin.copy( controls.getObject().position );
-      raycaster.ray.origin.y -= 10;
+    raycaster.ray.origin.copy( controls.getObject().position );
+    raycaster.ray.origin.y -= 10;
 
-      const intersections = raycaster.intersectObjects( objects, false );
-      const onObject = intersections.length > 0;
-      const delta = ( time - prevTime ) / deltaMul;
+    const intersections = raycaster.intersectObjects( objects, false );
+    const onObject = intersections.length > 0;
+    const delta = ( time - prevTime ) / deltaMul;
 
-      velocity.x -= velocity.x * wasd1 * delta;
-      velocity.z -= velocity.z * wasd1 * delta;
+    velocity.x -= velocity.x * wasd1 * delta;
+    velocity.z -= velocity.z * wasd1 * delta;
 
-      velocity.y -= wasd2 * wasd3 * delta; // 100.0 = mass
+    velocity.y -= wasd2 * wasd3 * delta; // 100.0 = mass
 
-      direction.z = Number( moveForward ) - Number( moveBackward );
-      direction.x = Number( moveRight ) - Number( moveLeft );
-      direction.normalize(); // this ensures consistent movements in all directions
+    direction.z = Number( moveForward ) - Number( moveBackward );
+    direction.x = Number( moveRight ) - Number( moveLeft );
+    direction.normalize(); // this ensures consistent movements in all directions
 
-      if ( moveForward || moveBackward ) velocity.z -= direction.z * wasd3 * delta;
-      if ( moveLeft || moveRight ) velocity.x -= direction.x * wasd4 * delta;
+    if ( moveForward || moveBackward ) velocity.z -= direction.z * wasd3 * delta;
+    if ( moveLeft || moveRight ) velocity.x -= direction.x * wasd4 * delta;
 
-      if ( onObject === true ) {
-        velocity.y = Math.max( 0, velocity.y );
-      }
+    if ( onObject === true ) {
+      velocity.y = Math.max( 0, velocity.y );
+    }
 
-      controls.moveRight( - velocity.x * delta );
-      controls.moveForward( - velocity.z * delta );
-      controls.moveForward( - velocity.z * delta );
+    controls.moveRight( - velocity.x * delta );
+    controls.moveForward( - velocity.z * delta );
+    controls.moveForward( - velocity.z * delta );
 
-      // clamp camera. but should be done via controls.
-      const position = camera.position;
-      position.x = Math.min(Math.max(position.x, boundingBox.min.x), boundingBox.max.x);
-      position.y = Math.min(Math.max(position.y, boundingBox.min.y), boundingBox.max.y);
-      position.z = Math.min(Math.max(position.z, boundingBox.min.z), boundingBox.max.z);
+    // clamp camera. but should be done via controls.
+    const position = camera.position;
+    position.x = Math.min(Math.max(position.x, boundingBox.min.x), boundingBox.max.x);
+    position.y = Math.min(Math.max(position.y, boundingBox.min.y), boundingBox.max.y);
+    position.z = Math.min(Math.max(position.z, boundingBox.min.z), boundingBox.max.z);
 
-      if (position.x < cornerDoorSideInside.x) {
-        boundingBox = new THREE.Box3(
-          cornerOppositeOfDoorSide,
-          cornerDoorSideInside,
-        );
-      }
-    // }
+    if (position.x < cornerDoorSideInside.x) {
+      boundingBox = new THREE.Box3(
+        cornerOppositeOfDoorSide,
+        cornerDoorSideInside,
+      );
+      renderer.domElement.addEventListener('mousemove', onObjectHover);
+    }
 
     prevTime = time;
-  }
+  };
   return {controls, animateControls, enableKeyboard};
 }
