@@ -21,17 +21,15 @@ export const onObjectHover = (event) => {
     const firstIntersectedObject = intersects[0].object;
 
     if (firstIntersectedObject.userData.interactive !== false) {
-      if (selectedObject !== firstIntersectedObject) {
-        if (selectedObject) {
-          selectedObject.material = selectedObject.originalMaterial;
-        }
-
-        selectedObject = firstIntersectedObject;
-        selectedObject.originalMaterial = selectedObject.material;
-
-        const { name, description } = selectedObject.userData; // Access userData directly from the intersected mesh
-        showUIPanel(name, description);
+      if (selectedObject) {
+        selectedObject.material = selectedObject.originalMaterial;
       }
+
+      selectedObject = firstIntersectedObject;
+      selectedObject.originalMaterial = selectedObject.material;
+
+      const { name, description } = selectedObject.userData; // Access userData directly from the intersected mesh
+      showUIPanel(name, description);
     }
   } else if (selectedObject) {
     selectedObject.material = selectedObject.originalMaterial;
@@ -50,7 +48,7 @@ export const exitCameraLookAt = () => {
 };
 
 // Function to show the UI panel
-export const showUIPanel = (name, description) => {
+export const showUIPanel = (name, description, givenObject = null) => {
   const uiElement = document.createElement('div');
   uiElement.style.display = 'inline-block';
   uiElement.style.content = '';
@@ -59,7 +57,7 @@ export const showUIPanel = (name, description) => {
   uiElement.style.verticalAlign = 'top';
   uiElement.className = 'ui-element show';
   uiElement.style.width = '20vw';
-  uiElement.style.height = '10vh';
+  uiElement.style.height = 'auto';
   uiElement.style.fontSize = '18px';
   uiElement.style.letterSpacing = '0.5px';
 
@@ -80,7 +78,7 @@ export const showUIPanel = (name, description) => {
   exitButton.style.marginTop = '10px';
   exitButton.style.marginLeft = '2px';
 
-  updateUIElementPosition(selectedObject);
+  updateUIElementPosition(givenObject ?? selectedObject);
 
   // Exit button event listener
   uiElement.querySelector('.exit-button').addEventListener('click', () => {
@@ -96,17 +94,21 @@ export const hideUIPanel = () => {
 
 const updateUIElementPosition = (object) => {
   if (object) {
-    const widthHalf = 0.5 * canvas.offsetWidth;
-    const heightHalf = 0.5 * canvas.offsetHeight;
-    object.updateMatrixWorld();
-    const objectPosition = new THREE.Vector3().setFromMatrixPosition(object.matrixWorld);
-    const screenPosition = objectPosition.project(camera);
-
-    const x = (screenPosition.x * widthHalf) + widthHalf;
-    const y = -(screenPosition.y * heightHalf) + heightHalf;
-
     const uiElement = document.querySelector('.ui-element');
     if (uiElement) {
+      const widthHalf = 0.5 * canvas.offsetWidth;
+      const heightHalf = 0.5 * canvas.offsetHeight;
+      object.updateMatrixWorld();
+      const objectPosition = new THREE.Vector3().setFromMatrixPosition(object.matrixWorld);
+      const screenPosition = objectPosition.project(camera);
+
+      let x = (screenPosition.x * widthHalf) + widthHalf;
+      let y = -(screenPosition.y * heightHalf) + heightHalf;
+
+      if (typeof object.userData.offsetTopPx === 'number') {
+        x = x + object.userData.offsetTopPx;
+      }
+
       // uiElement.style.transform = `translate(-75%, -75%) translate(${x}px,${y}px)`;
       uiElement.style.position = 'absolute';
       uiElement.style.left = `${x}px`;

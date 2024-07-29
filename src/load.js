@@ -54,12 +54,14 @@ if (!isMobileOrTablet()) {
       name: 'Rabbit',
       description: 'Oil, gold, silver, and gold leaf on wood (Paulownia) 18 3/4 x 11 1/2 in'
     },
+    // problematic, index=3
     {
       path: './static/models/wedding_night.glb',
       position: [0, 0, 0],
       rotation: [0, 0, 0],
       name: 'Wedding Night',
-      description: 'Oil, gold, and silver on wood (Curly maple). 18 3/4 x 18 in'
+      description: 'Oil, gold, and silver on wood (Curly maple). 18 3/4 x 18 in',
+      offsetTopPx: 100,
     },
     {
       path: './static/models/anima1.glb',
