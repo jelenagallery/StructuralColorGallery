@@ -34,12 +34,7 @@ document.getElementById('loadingOverlay').appendChild(loadingButtonDiv);
 // Loading manager
 const loadingManager = new THREE.LoadingManager();
 
-loadingManager.onStart = function (url, itemsLoaded, itemsTotal) {
-    console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
-};
-
 loadingManager.onLoad = function () {
-    console.log('Loading complete!');
     loadingButton.style.border = '5px solid green';
     document.getElementById('down-arrow').style.borderColor = `green`;
     document.getElementById('loadingPercentage').style.color = `green`;
@@ -51,7 +46,7 @@ loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {
 };
 
 loadingManager.onError = function (url) {
-    console.log('There was an error loading ' + url);
+    console.warn('There was an error loading ' + url);
 };
 
 // GLTF Loader with DRACO Loader

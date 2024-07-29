@@ -61,7 +61,8 @@ if (!isMobileOrTablet()) {
       rotation: [0, 0, 0],
       name: 'Wedding Night',
       description: 'Oil, gold, and silver on wood (Curly maple). 18 3/4 x 18 in',
-      offsetTopPx: 100,
+      offsetTopPx: 200, // @unused
+      offsetLeftPx: 300, // @unused
     },
     {
       path: './static/models/anima1.glb',
@@ -89,7 +90,7 @@ if (!isMobileOrTablet()) {
       position: [0, 0, 0],
       rotation: [0, 0, 0],
       name: 'Self Portrait B',
-      description: 'Oil, gold, and silver on wood. 17 x 8 in'
+      description: 'Oil, gold, and silver on wood. 17 x 8 in',
     },
     {
       path: './static/models/anima2.glb',
@@ -103,7 +104,7 @@ if (!isMobileOrTablet()) {
       position: [0, 0, 0],
       rotation: [0, 0, 0],
       name: 'Revelers',
-      description: 'Oil, gold, and silver on wood (Lemon tree) 7 5/8 x 7 1/4 in'
+      description: 'Oil, gold, and silver on wood (Lemon tree) 7 5/8 x 7 1/4 in',
     },
     {
       path: './static/models/kodama3.glb',
@@ -149,8 +150,8 @@ if (!isMobileOrTablet()) {
     },
     {
       path: './static/models/owl.glb',
-      position: [-1.35, 1, 2.75],
-      rotation: [0, 2.2, 0],
+      position: [-1.45, 1.16, 2.65],
+      rotation: [0, 3, 0],
       name: 'Owl',
       description: 'Oil, gold, and silver on wood (Curly maple). 15 x 8 7/8 in.'
     },
@@ -173,9 +174,9 @@ if (!isMobileOrTablet()) {
             node.userData = {name, description, interactive: true}; // Assign userData to each mesh
           }
         });
+
         scene.add(object);
         objects.push(object);
-        console.debug(`Added object to scene loaded via gltfloader`);
       },
       undefined,
       (error) => {
@@ -185,7 +186,6 @@ if (!isMobileOrTablet()) {
   });
 
   loadingManager.onLoad = function () {
-    console.debug('Loading complete!');
     loadingButton.style.border = '5px solid green';
     document.getElementById('down-arrow').style.borderColor = `green`;
     document.getElementById('loadingPercentage').style.color = `green`;

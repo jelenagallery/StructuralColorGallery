@@ -29,7 +29,17 @@ export const onObjectHover = (event) => {
       selectedObject.originalMaterial = selectedObject.material;
 
       const { name, description } = selectedObject.userData; // Access userData directly from the intersected mesh
-      showUIPanel(name, description);
+
+      const explicitLabelPosition = {x:event.clientX+100, y:event.clientY+100};
+
+      if (event.clientX+350+100 >= sizes.width) {
+        explicitLabelPosition.x = sizes.width - 350;
+      }
+
+      if (event.clientY+100+100 >= sizes.height) {
+        explicitLabelPosition.y = sizes.height - 100;
+      }
+      showUIPanel(name, description, null, explicitLabelPosition);
     }
   } else if (selectedObject) {
     selectedObject.material = selectedObject.originalMaterial;
@@ -48,7 +58,7 @@ export const exitCameraLookAt = () => {
 };
 
 // Function to show the UI panel
-export const showUIPanel = (name, description, givenObject = null) => {
+export const showUIPanel = (name, description, givenObject = null, explicitPosition = null) => {
   const uiElement = document.createElement('div');
   uiElement.style.display = 'inline-block';
   uiElement.style.content = '';
@@ -78,7 +88,7 @@ export const showUIPanel = (name, description, givenObject = null) => {
   exitButton.style.marginTop = '10px';
   exitButton.style.marginLeft = '2px';
 
-  updateUIElementPosition(givenObject ?? selectedObject);
+  updateUIElementPosition(givenObject ?? selectedObject, explicitPosition);
 
   // Exit button event listener
   uiElement.querySelector('.exit-button').addEventListener('click', () => {
@@ -92,24 +102,34 @@ export const hideUIPanel = () => {
 };
 
 
-const updateUIElementPosition = (object) => {
+const updateUIElementPosition = (object, explicitPosition = null) => {
   if (object) {
     const uiElement = document.querySelector('.ui-element');
     if (uiElement) {
-      const widthHalf = 0.5 * canvas.offsetWidth;
-      const heightHalf = 0.5 * canvas.offsetHeight;
-      object.updateMatrixWorld();
-      const objectPosition = new THREE.Vector3().setFromMatrixPosition(object.matrixWorld);
-      const screenPosition = objectPosition.project(camera);
+      let x;
+      let y;
+      if (explicitPosition) {
+        x = explicitPosition.x;
+        y = explicitPosition.y;
+      } else {
+        const widthHalf = 0.5 * canvas.offsetWidth;
+        const heightHalf = 0.5 * canvas.offsetHeight;
+        object.updateMatrixWorld();
+        const objectPosition = new THREE.Vector3().setFromMatrixPosition(object.matrixWorld);
+        const screenPosition = objectPosition.project(camera);
 
-      let x = (screenPosition.x * widthHalf) + widthHalf;
-      let y = -(screenPosition.y * heightHalf) + heightHalf;
+        x = (screenPosition.x * widthHalf) + widthHalf;
+        y = -(screenPosition.y * heightHalf) + heightHalf;
 
-      if (typeof object.userData.offsetTopPx === 'number') {
-        x = x + object.userData.offsetTopPx;
+        if (typeof object.userData.offsetTopPx === 'number') {
+          y = y + object.userData.offsetTopPx;
+        }
+
+        if (typeof object.userData.offsetLeftPx === 'number') {
+          x = x + object.userData.offsetLeftPx;
+        }
       }
 
-      // uiElement.style.transform = `translate(-75%, -75%) translate(${x}px,${y}px)`;
       uiElement.style.position = 'absolute';
       uiElement.style.left = `${x}px`;
       uiElement.style.top = `${y}px`;
