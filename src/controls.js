@@ -1,7 +1,7 @@
-import {PointerLockControls} from "three/addons";
 import * as THREE from "three";
 import {objects} from "./load.js";
 import {onObjectHover} from "./labels.js";
+import {PointerLockControls} from "./PointerLockControls.js";
 
 export let controls;
 export function init (camera, renderer, scene, lockCallback = null, unlockCallback = null) {

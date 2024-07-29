@@ -245,6 +245,15 @@ body {
     padding-top: 10%;
 }
 
+.mobile-unsupported {
+    background: yellow;
+    font-size: 1.2em;
+    font-family: 'Quattrocento Sans', sans-serif;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 2px;
+}
+
 .splash-instructions .svg-drag-animation, .splash-instructions .svg-keyboard-animation {
     width: 50%;
     display: inline-block;

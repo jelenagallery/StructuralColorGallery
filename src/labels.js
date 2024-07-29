@@ -1,12 +1,12 @@
 // Update to show UI panel with information about the object on hover
 import * as THREE from "three";
 import {camera, canvas, scene} from "./engine.js";
-import {sizes} from "./config.js";
+import {isMobileOrTablet, sizes} from "./config.js";
 import {uiContainer} from "./dom.js";
 
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
 export let selectedObject = null;
+let raycaster;
+let mouse;
 
 export const onObjectHover = (event) => {
   event.preventDefault();
@@ -39,6 +39,7 @@ export const onObjectHover = (event) => {
     hideUIPanel();
   }
 };
+
 // Function to exit the camera look at and restore the original state
 export const exitCameraLookAt = () => {
   if (selectedObject) {
@@ -92,6 +93,7 @@ export const hideUIPanel = () => {
   uiContainer.innerHTML = '';
 };
 
+
 const updateUIElementPosition = (object) => {
   if (object) {
     const widthHalf = 0.5 * canvas.offsetWidth;
@@ -112,3 +114,8 @@ const updateUIElementPosition = (object) => {
     }
   }
 };
+
+if (!isMobileOrTablet()) {
+  raycaster = new THREE.Raycaster();
+  mouse = new THREE.Vector2();
+}

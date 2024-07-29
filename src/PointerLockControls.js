@@ -32,16 +32,25 @@ class PointerLockControls extends EventDispatcher {
 		this.pointerSpeed = 1.0;
 
 		this._onMouseMove = onMouseMove.bind( this );
+		this._onTouchMove = onTouchMove.bind( this );
 		this._onPointerlockChange = onPointerlockChange.bind( this );
 		this._onPointerlockError = onPointerlockError.bind( this );
 
-		this.connect();
+		this.domElement.ownerDocument.exitPointerLock = this.domElement.ownerDocument.exitPointerLock ||
+			this.domElement.ownerDocument.mozExitPointerLock ||
+			this.domElement.ownerDocument.webkitExitPointerLock ||
+			function () { /* nop */ };
 
+		this.connect();
 	}
 
 	connect() {
 
 		this.domElement.ownerDocument.addEventListener( 'mousemove', this._onMouseMove );
+		this.domElement.ownerDocument.addEventListener( 'touchmove', this._onTouchMove );
+		this.domElement.ownerDocument.addEventListener( 'touchstart', this._onTouchMove );
+		this.domElement.ownerDocument.addEventListener( 'touchend', this._onTouchMove );
+		this.domElement.ownerDocument.addEventListener( 'touchcancel', this._onTouchMove );
 		this.domElement.ownerDocument.addEventListener( 'pointerlockchange', this._onPointerlockChange );
 		this.domElement.ownerDocument.addEventListener( 'pointerlockerror', this._onPointerlockError );
 
@@ -50,6 +59,8 @@ class PointerLockControls extends EventDispatcher {
 	disconnect() {
 
 		this.domElement.ownerDocument.removeEventListener( 'mousemove', this._onMouseMove );
+		this.domElement.ownerDocument.removeEventListener( 'touchmove', this._onTouchMove );
+		this.domElement.ownerDocument.removeEventListener( 'touchstart', this._onTouchMove );
 		this.domElement.ownerDocument.removeEventListener( 'pointerlockchange', this._onPointerlockChange );
 		this.domElement.ownerDocument.removeEventListener( 'pointerlockerror', this._onPointerlockError );
 
@@ -100,13 +111,13 @@ class PointerLockControls extends EventDispatcher {
 
 	lock() {
 
-		this.domElement.requestPointerLock();
+		this.domElement.requestPointerLock && this.domElement.requestPointerLock();
 
 	}
 
 	unlock() {
 
-		this.domElement.ownerDocument.exitPointerLock();
+		this.domElement.ownerDocument.exitPointerLock && this.domElement.ownerDocument.exitPointerLock();
 
 	}
 
@@ -115,12 +126,28 @@ class PointerLockControls extends EventDispatcher {
 // event listeners
 
 function onMouseMove( event ) {
-
 	if ( this.isLocked === false ) return;
 
 	const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
 	const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
+	const camera = this.camera;
+	_euler.setFromQuaternion( camera.quaternion );
+
+	_euler.y -= movementX * 0.002 * this.pointerSpeed;
+	_euler.x -= movementY * 0.002 * this.pointerSpeed;
+
+	_euler.x = Math.max( _PI_2 - this.maxPolarAngle, Math.min( _PI_2 - this.minPolarAngle, _euler.x ) );
+
+	camera.quaternion.setFromEuler( _euler );
+
+	this.dispatchEvent( _changeEvent );
+
+}
+
+function onTouchMove( event ) {
+	const movementX = (event.targetTouches && event.targetTouches[0] && event.targetTouches[0].clientX) || (event.changedTouches && event.changedTouches[0] && event.changedTouches[0].clientX) || event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+	const movementY = (event.targetTouches && event.targetTouches[0] && event.targetTouches[0].clientY) || (event.changedTouches && event.changedTouches[0] && event.changedTouches[0].clientY) || event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 	const camera = this.camera;
 	_euler.setFromQuaternion( camera.quaternion );
 
