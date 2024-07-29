@@ -172,6 +172,9 @@ if (!isMobileOrTablet()) {
             node.castShadow = false;  // Disabled casting shadows for performance gain
             node.receiveShadow = false;  // Disabled receiving shadows for performance gain
             node.userData = {name, description, interactive: true}; // Assign userData to each mesh
+            if (path.indexOf('kodama_1.glb') > -1) {
+              node.material.visible = false;
+            }
           }
         });
 
