@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {isMobileOrTablet, isSafari, sizes, skyboxTextures, STATS_ENABLED} from "./config.js";
+import {isMobileOrTablet, isSafari, params, sizes, skyboxTextures, STATS_ENABLED} from "./config.js";
 import Stats from "three/addons/libs/stats.module.js";
 import {init as initControls} from "./controls.js";
 
@@ -10,7 +10,8 @@ export let renderer;
 export let stats;
 
 if (!isMobileOrTablet()) {
-// Base
+  // Base
+  const requestedFps = params().get('fps') ?? null;
   canvas = document.querySelector('canvas.webgl');
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000);
@@ -89,8 +90,10 @@ if (!isMobileOrTablet()) {
   };
 
   const runManaged = () => {
-    let frameLengthMS = 1000 / 10; // 60 fps
+    let frameLengthMS = 1000 / (requestedFps ? requestedFps : 60); // 60 fps
     let previousTime = 0;
+
+    console.debug('Running managed:', {requestedFps});
 
     function render(timestamp) {
       if (!timestamp || timestamp - previousTime > frameLengthMS) {
@@ -102,8 +105,11 @@ if (!isMobileOrTablet()) {
     requestAnimationFrame(render);
   };
 
-  runPlain();
-  // runManaged();
+  if (requestedFps) {
+    runManaged();
+  } else {
+    runPlain();
+  }
 
   window.addEventListener('resize', onResize);
 }

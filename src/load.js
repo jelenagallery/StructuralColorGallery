@@ -3,14 +3,17 @@ import {loadingButton} from "./dom.js";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader.js";
 import {scene} from "./engine.js";
-import {isMobileOrTablet} from "./config.js";
+import {isMobileOrTablet, params} from "./config.js";
 
 export const objects = [];
 
 // ?max=1 query support to load bigger models.
-const url = new URL(window.location.href);
-const maxParam = url.searchParams.get('max');
+const maxParam = params().get('max');
 let modelPathPrefix = maxParam ? '' : 'min/';
+
+if (!modelPathPrefix) {
+  console.debug('Loading non-compressed models');
+}
 
 if (!isMobileOrTablet()) {
   // Loading manager

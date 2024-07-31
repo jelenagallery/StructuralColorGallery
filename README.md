@@ -24,3 +24,9 @@ Special Thanks to Aysu Unal for handling 3D scanning of the space. Aysu worked w
 - R to reset the camera to the initial position
 
   
+**Debug Tools**
+https://spector.babylonjs.com/demos/sponzadynamicshadows/
+    Information section after capturing for debug
+    Spector.js browser extensions
+?max=1
+?fps=30
