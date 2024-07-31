@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import * as TWEEN from '@tweenjs/tween.js';
 
 // Base
 const canvas = document.querySelector('canvas.webgl');
@@ -405,7 +404,6 @@ const tick = () => {
     position.y = Math.min(Math.max(position.y, boundingBox.min.y), boundingBox.max.y);
     position.z = Math.min(Math.max(position.z, boundingBox.min.z), boundingBox.max.z);
 
-    TWEEN.update();
     renderer.render(scene, camera);
     requestAnimationFrame(tick);
 };

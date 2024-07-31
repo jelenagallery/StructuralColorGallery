@@ -6,8 +6,8 @@ import {PointerLockControls} from "./PointerLockControls.js";
 export let controls;
 export function init (camera, renderer, scene, lockCallback = null, unlockCallback = null) {
   controls = new PointerLockControls( camera, renderer.domElement );
+  const clock = new THREE.Clock();
   const raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
-  const deltaMul = 1000;
   const wasd1 = 10.0;
   const wasd2 = 9.8;
   const wasd3 = 20.0;
@@ -109,7 +109,7 @@ export function init (camera, renderer, scene, lockCallback = null, unlockCallba
 
     const intersections = raycaster.intersectObjects( objects, false );
     const onObject = intersections.length > 0;
-    const delta = ( time - prevTime ) / deltaMul;
+    const delta = clock.getDelta();
 
     velocity.x -= velocity.x * wasd1 * delta;
     velocity.z -= velocity.z * wasd1 * delta;

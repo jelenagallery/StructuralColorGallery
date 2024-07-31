@@ -1,7 +1,10 @@
 export const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
+  coverPage: true,
 };
+
+export const STATS_ENABLED = true;
 
 export const skyboxTextures = [
   './static/textures/skybox/right.jpg',

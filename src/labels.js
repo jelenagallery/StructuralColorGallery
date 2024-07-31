@@ -57,6 +57,8 @@ export const exitCameraLookAt = () => {
   hideUIPanel();
 };
 
+window.exitCameraLookAt = exitCameraLookAt;
+
 // Function to show the UI panel
 export const showUIPanel = (name, description, givenObject = null, explicitPosition = null) => {
   const uiElement = document.createElement('div');
@@ -74,7 +76,7 @@ export const showUIPanel = (name, description, givenObject = null, explicitPosit
   uiElement.innerHTML = `
         <div><strong>${name}</strong></div>
         <div>${description}</div>
-        <button class="exit-button">Close</button>
+        <button class="exit-button" onclick="window.exitCameraLookAt()">Close</button>
     `;
   uiContainer.innerHTML = '';
   uiContainer.appendChild(uiElement);
@@ -89,11 +91,6 @@ export const showUIPanel = (name, description, givenObject = null, explicitPosit
   exitButton.style.marginLeft = '2px';
 
   updateUIElementPosition(givenObject ?? selectedObject, explicitPosition);
-
-  // Exit button event listener
-  uiElement.querySelector('.exit-button').addEventListener('click', () => {
-    exitCameraLookAt();
-  });
 };
 
 // Function to hide the UI panel

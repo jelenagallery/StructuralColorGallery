@@ -7,6 +7,11 @@ import {isMobileOrTablet} from "./config.js";
 
 export const objects = [];
 
+// ?max=1 query support to load bigger models.
+const url = new URL(window.location.href);
+const maxParam = url.searchParams.get('max');
+let modelPathPrefix = maxParam ? '' : 'min/';
+
 if (!isMobileOrTablet()) {
   // Loading manager
   const loadingManager = new THREE.LoadingManager();
@@ -17,7 +22,7 @@ if (!isMobileOrTablet()) {
   gltfloader.setDRACOLoader(dracoLoader);
 
   gltfloader.load(
-    './static/models/forest.glb',
+    './static/models/'+modelPathPrefix+'forest.glb',
     (gltf) => {
       gltf.scene.position.set(0, 0, 0);
       gltf.scene.rotation.set(0, 0, 0);
@@ -34,21 +39,21 @@ if (!isMobileOrTablet()) {
 // Models array with positions, names, and descriptions
   const models = [
     {
-      path: './static/models/bird.glb',
+      path: './static/models/'+modelPathPrefix+'bird.glb',
       position: [-3.85, 1.19, 1.8],
       rotation: [0, -0.35, 0],
       name: 'Bird',
       description: 'Oil, gold, and silver on wood (Paulownia) 13 3/4 x 10 3/4 in'
     },
     {
-      path: './static/models/swamp.glb',
+      path: './static/models/'+modelPathPrefix+'swamp.glb',
       position: [-3.85, 1.45, 1],
       rotation: [0, 1.5, 0],
       name: 'Swamp',
       description: 'Oil, gold, and silver on wood (Linden) 21 1/2 x 7 1/4 in'
     },
     {
-      path: './static/models/rabbit.glb',
+      path: './static/models/'+modelPathPrefix+'rabbit.glb',
       position: [-3.85, 1.15, 0.01],
       rotation: [0, 1.5, 0],
       name: 'Rabbit',
@@ -56,7 +61,7 @@ if (!isMobileOrTablet()) {
     },
     // problematic, index=3
     {
-      path: './static/models/wedding_night.glb',
+      path: './static/models/'+modelPathPrefix+'wedding_night.glb',
       position: [0, 0, 0],
       rotation: [0, 0, 0],
       name: 'Wedding Night',
@@ -65,91 +70,91 @@ if (!isMobileOrTablet()) {
       offsetLeftPx: 300, // @unused
     },
     {
-      path: './static/models/anima1.glb',
+      path: './static/models/'+modelPathPrefix+'anima1.glb',
       position: [-2.04, -0.1, -2.8],
       rotation: [0, -4.6, 0],
       name: 'Anima I',
       description: 'Oil, gold, and silver on wood. 18 x 16 x 18 in'
     },
     {
-      path: './static/models/kodama_1.glb',
+      path: './static/models/'+modelPathPrefix+'kodama_1.glb',
       position: [1, 0, 0.1],
       rotation: [0, 0.3, 0],
       name: 'Kodama I',
       description: 'Oil, gold, and silver on wood. 14 x 9 in'
     },
     {
-      path: './static/models/self_portrait_a.glb',
+      path: './static/models/'+modelPathPrefix+'self_portrait_a.glb',
       position: [2.4, 1.11, -2.27],
       rotation: [0, -1.5, 0],
       name: 'Self Portrait A',
       description: 'Oil, gold, and silver on wood. 17 x 12 in'
     },
     {
-      path: './static/models/self_portrait_b.glb',
+      path: './static/models/'+modelPathPrefix+'self_portrait_b.glb',
       position: [0, 0, 0],
       rotation: [0, 0, 0],
       name: 'Self Portrait B',
       description: 'Oil, gold, and silver on wood. 17 x 8 in',
     },
     {
-      path: './static/models/anima2.glb',
+      path: './static/models/'+modelPathPrefix+'anima2.glb',
       position: [-0.25, -0.05, -1.55],
       rotation: [0, -3.85, 0],
       name: 'Anima II',
       description: 'Oil, gold, and silver on wood 18 x 13 x 13 in'
     },
     {
-      path: './static/models/revelers.glb',
+      path: './static/models/'+modelPathPrefix+'revelers.glb',
       position: [0, 0, 0],
       rotation: [0, 0, 0],
       name: 'Revelers',
       description: 'Oil, gold, and silver on wood (Lemon tree) 7 5/8 x 7 1/4 in',
     },
     {
-      path: './static/models/kodama3.glb',
+      path: './static/models/'+modelPathPrefix+'kodama3.glb',
       position: [2.4, 1.3, -0.55],
       rotation: [0, -1.5, 0],
       name: 'Kodama 3',
       description: 'Oil, gold, and silver on wood. 13 x 16 in'
     },
     {
-      path: './static/models/paradise1.glb',
+      path: './static/models/'+modelPathPrefix+'paradise1.glb',
       position: [2.65, 1.05, 3.05],
       rotation: [0, -1.5, 0],
       name: 'Paradise I',
       description: 'Oil, gold, and silver on wood (Black walnut) 32 1/2 x 17 in'
     },
     {
-      path: './static/models/paradise2.glb',
+      path: './static/models/'+modelPathPrefix+'paradise2.glb',
       position: [1.55, 0.9, 3.85],
       rotation: [0, 3.15, 0],
       name: 'Paradise II',
       description: 'Oil, gold, and silver on wood (Black walnut) 40 1/4 x 15 3/4 in'
     },
     {
-      path: './static/models/deep_sea_fish_a.glb',
+      path: './static/models/'+modelPathPrefix+'deep_sea_fish_a.glb',
       position: [-0.5, 1.4, 3.88],
       rotation: [0, 3.15, 0],
       name: 'Deep-Sea Fish A',
       description: 'Oil and gold on wood (paulownia) 9 1/2 x 14 3/4 in. Abstract painting of a fish'
     },
     {
-      path: './static/models/deep_sea_fish_b.glb',
+      path: './static/models/'+modelPathPrefix+'deep_sea_fish_b.glb',
       position: [-0.66, 1.05, 3.88],
       rotation: [0, 3.15, 0],
       name: 'Deep-Sea Fish B',
       description: 'Oil, gold, and silver on wood (paulownia) 9 1/2 x 14 3/4 in. Abstract painting of a fish.'
     },
     {
-      path: './static/models/profile.glb',
+      path: './static/models/'+modelPathPrefix+'profile.glb',
       position: [-1.98, 1.1, 3.9],
       rotation: [0, 3.15, 0],
       name: 'Profile',
       description: 'Oil, gold, and silver on wood (Japanese cypress. 18 x 9 in.'
     },
     {
-      path: './static/models/owl.glb',
+      path: './static/models/'+modelPathPrefix+'owl.glb',
       position: [-1.45, 1.16, 2.65],
       rotation: [0, 3, 0],
       name: 'Owl',

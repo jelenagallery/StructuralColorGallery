@@ -1,4 +1,4 @@
-import {canvas, /*stats*/} from "./engine.js";
+import {canvas, stats} from "./engine.js";
 import {isMobileOrTablet} from "./config.js";
 
 export const uiContainer = document.getElementById('ui-container');
@@ -12,9 +12,10 @@ if (isMobileOrTablet()) {
   document.getElementById('loadingPercentage').style.display = 'none';
   document.getElementById('loading-text').style.fontSize = '4.9vw';
 } else {
-
-  // const body = document.getElementsByTagName('body').item(0);
-  // body.appendChild(stats.dom);
+  if (stats) {
+    const body = document.getElementsByTagName('body').item(0);
+    body.appendChild(stats.dom);
+  }
   const splashInstructions = document.getElementById('splash-instructions');
   const clickToEnterWrapper = document.getElementById('clickToEnter');
 
