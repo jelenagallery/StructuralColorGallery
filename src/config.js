@@ -5,6 +5,7 @@ export const sizes = {
 };
 
 export const STATS_ENABLED = true;
+export const RENDER_AFTER_LOAD = true; // when false, we'll render while we load.
 
 export const skyboxTextures = [
   './static/textures/skybox/right.jpg',

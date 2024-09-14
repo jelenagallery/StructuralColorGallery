@@ -2,8 +2,8 @@ import * as THREE from 'three';
 import {loadingButton} from "./dom.js";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader.js";
-import {scene} from "./engine.js";
-import {isMobileOrTablet, params} from "./config.js";
+import {scene, loadCompleteToStart} from "./engine.js";
+import {isMobileOrTablet, params, STATS_ENABLED} from "./config.js";
 
 export const objects = [];
 
@@ -12,7 +12,7 @@ const maxParam = params().get('max');
 let modelPathPrefix = maxParam ? '' : 'min/';
 
 if (!modelPathPrefix) {
-  console.debug('Loading non-compressed models');
+  STATS_ENABLED && console.debug('Loading non-compressed models');
 }
 
 if (!isMobileOrTablet()) {
@@ -200,6 +200,7 @@ if (!isMobileOrTablet()) {
     loadingButton.style.border = '5px solid green';
     document.getElementById('down-arrow').style.borderColor = `green`;
     document.getElementById('loadingPercentage').style.color = `green`;
+    loadCompleteToStart && loadCompleteToStart();
   };
 
   loadingManager.onProgress = function (url, itemsLoaded, itemsTotal) {

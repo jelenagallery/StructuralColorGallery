@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {isMobileOrTablet, isSafari, params, sizes, skyboxTextures, STATS_ENABLED} from "./config.js";
+import {isMobileOrTablet, isSafari, params, sizes, skyboxTextures, STATS_ENABLED, RENDER_AFTER_LOAD} from "./config.js";
 import Stats from "three/addons/libs/stats.module.js";
 import {init as initControls} from "./controls.js";
 
@@ -8,6 +8,7 @@ export let scene;
 export let camera;
 export let renderer;
 export let stats;
+export let loadCompleteToStart;
 
 if (!isMobileOrTablet()) {
   // Base
@@ -52,7 +53,7 @@ if (!isMobileOrTablet()) {
   };
 
   const {animateControls, enableKeyboard} = initControls(camera, renderer, scene, onLock, onUnlock);
-  const ambientLight = new THREE.AmbientLight(0xffffff, 4);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
   let initialized = false;
 
   scene.background = new THREE.Color('#FFFFFF');
@@ -105,10 +106,18 @@ if (!isMobileOrTablet()) {
     requestAnimationFrame(render);
   };
 
-  if (requestedFps) {
-    runManaged();
+  if (RENDER_AFTER_LOAD) {
+    if (requestedFps) {
+      loadCompleteToStart = runManaged;
+    } else {
+      loadCompleteToStart = runPlain;
+    }
   } else {
-    runPlain();
+    if (requestedFps) {
+      runManaged();
+    } else {
+      runPlain();
+    }
   }
 
   window.addEventListener('resize', onResize);
