@@ -3,21 +3,55 @@ import {isMobileOrTablet} from "./config.js";
 
 export const uiContainer = document.getElementById('ui-container');
 export let loadingButton;
+const isMobile = isMobileOrTablet();
 
-if (isMobileOrTablet()) {
+if (stats) {
+  const body = document.getElementsByTagName('body').item(0);
+  body.appendChild(stats.dom);
+}
+const splashInstructions = document.getElementById('splash-instructions');
+const clickToEnterWrapper = document.getElementById('clickToEnter');
+
+if (isMobile) {
+  clickToEnterWrapper.addEventListener('click', () => {
+    document.getElementById('loadingOverlay').style.display = 'none';
+    // <iframe width="100%" height="640" frameborder="0" allow="xr-spatial-tracking; gyroscope; accelerometer" allowfullscreen scrolling="no" src="https://kuula.co/share/collection/7K7rz?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"></iframe>
+    const mobileIframe = document.createElement('iframe');
+    mobileIframe.src = 'https://kuula.co/share/collection/7K7rz?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1';
+    mobileIframe.width = '100%';
+    mobileIframe.height = '500px';
+    mobileIframe.style.height = '100dvh';
+    mobileIframe.frameBorder = '0';
+    mobileIframe.allow = 'xr-spatial-tracking; gyroscope; accelerometer';
+    mobileIframe.allowFullscreen = true;
+    mobileIframe.scrolling = "no";
+    document.body.appendChild(mobileIframe);
+    console.log(mobileIframe);
+  });
+
   const unsupportedDiv = document.createElement('div');
-  unsupportedDiv.innerHTML = 'This experience requires a computer to run';
+  unsupportedDiv.innerHTML = 'This experience requires a computer to run. By entering the forest, you will see a <strong>downgraded version</strong> of our virtual experience.';
   unsupportedDiv.className = "mobile-unsupported";
   document.getElementById('clickToEnter').appendChild(unsupportedDiv);
   document.getElementById('loadingPercentage').style.display = 'none';
   document.getElementById('loading-text').style.fontSize = '4.9vw';
 } else {
-  if (stats) {
-    const body = document.getElementsByTagName('body').item(0);
-    body.appendChild(stats.dom);
+  clickToEnterWrapper.addEventListener('click', () => {
+    document.getElementById('loadingOverlay').style.display = 'none';
+    splashInstructions.style.display = 'block';
+    canvas.style.display = 'block';
+
+    if (!isMobile) {
+      document.addEventListener( 'keydown', hideSplashInstructions, {once: true} );
+      document.addEventListener( 'keyup', hideSplashInstructions, {once: true} );
+    }
+  });
+
+  splashInstructions.addEventListener('click', hideSplashInstructions);
+
+  function hideSplashInstructions() {
+    splashInstructions.style.display = 'none';
   }
-  const splashInstructions = document.getElementById('splash-instructions');
-  const clickToEnterWrapper = document.getElementById('clickToEnter');
 
 // Create a loading button with an image
   loadingButton = document.createElement('img');
@@ -28,22 +62,6 @@ if (isMobileOrTablet()) {
   loadingButton.style.transition = 'background-color 0.5s'; // Smooth transition for hover effect
   loadingButton.style.zIndex = '100';
   loadingButton.style.cursor = 'pointer';
-
-  clickToEnterWrapper.addEventListener('click', () => {
-    document.getElementById('loadingOverlay').style.display = 'none';
-    splashInstructions.style.display = 'block';
-    canvas.style.display = 'block';
-
-    document.addEventListener( 'keydown', hideSplashInstructions, {once: true} );
-    document.addEventListener( 'keyup', hideSplashInstructions, {once: true} );
-  });
-
-  splashInstructions.addEventListener('click', hideSplashInstructions);
-
-  function hideSplashInstructions() {
-    splashInstructions.style.display = 'none';
-  }
-
   const loadingButtonDiv = document.createElement('div');
   loadingButtonDiv.appendChild(loadingButton);
   clickToEnterWrapper.appendChild(loadingButtonDiv);

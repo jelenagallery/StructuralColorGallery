@@ -4,7 +4,7 @@ export const sizes = {
   coverPage: true,
 };
 
-export const STATS_ENABLED = true;
+export const STATS_ENABLED = false;
 export const RENDER_AFTER_LOAD = true; // when false, we'll render while we load.
 
 export const skyboxTextures = [
