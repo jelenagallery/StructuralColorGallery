@@ -8,8 +8,10 @@
     <script src="//d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js"></script>
     <script type="module">
         import BugsnagPerformance from '//d2wy8f7a9ursnm.cloudfront.net/v1/bugsnag-performance.min.js';
-        Bugsnag.start({ apiKey: 'eee1a53af69609a2bf66259c9d973d89' });
-        BugsnagPerformance.start({ apiKey: 'eee1a53af69609a2bf66259c9d973d89' });
+        try {
+            Bugsnag.start({ apiKey: 'eee1a53af69609a2bf66259c9d973d89' });
+            BugsnagPerformance.start({ apiKey: 'eee1a53af69609a2bf66259c9d973d89' });
+        } catch (e) {}
     </script>
 </head>
 <body>
