@@ -53,7 +53,7 @@ if (!isMobileOrTablet()) {
   };
 
   const {animateControls, enableKeyboard} = initControls(camera, renderer, scene, onLock, onUnlock);
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
   let initialized = false;
 
   scene.background = new THREE.Color('#FFFFFF');
